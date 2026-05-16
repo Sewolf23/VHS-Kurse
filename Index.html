@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fleischkurs VHS – Rezepte & Wissen</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5efe6;
+    --warm: #ede0cc;
+    --brown: #5c3d2e;
+    --rust: #a0522d;
+    --gold: #c9963a;
+    --dark: #1a1208;
+    --text: #2d1f0e;
+    --muted: #8b6f52;
+    --green: #4a6741;
+    --red: #8b2020;
+  }
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+font-family: ‘Crimson Pro’, Georgia, serif;
+background: var(–cream);
+color: var(–text);
+min-height: 100vh;
+}
+
+/* HEADER */
+header {
+background: var(–dark);
+color: var(–cream);
+text-align: center;
+padding: 3rem 2rem 2.5rem;
+position: relative;
+overflow: hidden;
+}
+header::before {
+content: ‘’;
+position: absolute;
+inset: 0;
+background: radial-gradient(ellipse at center top, rgba(201,150,58,0.18) 0%, transparent 70%);
+}
+header .subtitle {
+font-size: 0.85rem;
+letter-spacing: 0.35em;
+text-transform: uppercase;
+color: var(–gold);
+margin-bottom: 0.8rem;
+font-weight: 300;
+}
+header h1 {
+font-family: ‘Playfair Display’, serif;
+font-size: clamp(2.2rem, 6vw, 3.8rem);
+font-weight: 900;
+font-style: italic;
+line-height: 1.1;
+color: var(–cream);
+}
+header h1 span { color: var(–gold); }
+header p.lead {
+margin-top: 1rem;
+font-size: 1.1rem;
+color: rgba(245,239,230,0.7);
+font-style: italic;
+font-weight: 300;
+}
+
+/* NAV */
+nav {
+background: var(–brown);
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+gap: 0;
+position: sticky;
+top: 0;
+z-index: 100;
+box-shadow: 0 3px 15px rgba(0,0,0,0.3);
+}
+nav button {
+background: none;
+border: none;
+color: rgba(245,239,230,0.75);
+font-family: ‘Crimson Pro’, serif;
+font-size: 0.9rem;
+letter-spacing: 0.08em;
+padding: 0.9rem 1.2rem;
+cursor: pointer;
+transition: all 0.2s;
+border-bottom: 3px solid transparent;
+white-space: nowrap;
+}
+nav button:hover { color: var(–cream); background: rgba(255,255,255,0.07); }
+nav button.active { color: var(–gold); border-bottom-color: var(–gold); background: rgba(201,150,58,0.1); }
+
+/* MAIN */
+main { max-width: 900px; margin: 0 auto; padding: 2rem 1.2rem 4rem; }
+
+/* SECTIONS */
+section { display: none; animation: fadeIn 0.4s ease; }
+section.visible { display: block; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
+
+/* RECIPE CARD */
+.recipe-hero {
+background: var(–dark);
+color: var(–cream);
+border-radius: 4px 4px 0 0;
+padding: 2rem 2rem 1.5rem;
+position: relative;
+overflow: hidden;
+}
+.recipe-hero::after {
+content: ‘’;
+position: absolute;
+bottom: 0; left: 0; right: 0;
+height: 3px;
+background: linear-gradient(90deg, var(–rust), var(–gold), var(–rust));
+}
+.recipe-hero .tag {
+display: inline-block;
+background: var(–rust);
+color: var(–cream);
+font-size: 0.72rem;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+padding: 0.2rem 0.7rem;
+border-radius: 2px;
+margin-bottom: 0.8rem;
+}
+.recipe-hero h2 {
+font-family: ‘Playfair Display’, serif;
+font-size: clamp(1.6rem, 4vw, 2.4rem);
+font-style: italic;
+line-height: 1.15;
+}
+.recipe-hero .meta {
+margin-top: 1rem;
+display: flex; gap: 1.5rem; flex-wrap: wrap;
+font-size: 0.88rem; color: rgba(245,239,230,0.65);
+}
+.recipe-hero .meta span { display: flex; align-items: center; gap: 0.3rem; }
+
+.recipe-body {
+background: white;
+border-radius: 0 0 4px 4px;
+padding: 1.8rem 2rem;
+box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+margin-bottom: 2.5rem;
+}
+
+.recipe-cols { display: grid; grid-template-columns: 1fr 1.6fr; gap: 2rem; }
+@media(max-width:600px) { .recipe-cols { grid-template-columns: 1fr; } }
+
+h3 {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.05rem;
+color: var(–rust);
+border-bottom: 1px solid var(–warm);
+padding-bottom: 0.4rem;
+margin-bottom: 0.9rem;
+letter-spacing: 0.04em;
+}
+
+.ingredients ul { list-style: none; }
+.ingredients li {
+font-size: 0.95rem;
+padding: 0.35rem 0;
+border-bottom: 1px solid rgba(0,0,0,0.05);
+display: flex; align-items: baseline; gap: 0.5rem;
+}
+.ingredients li::before {
+content: ‘·’;
+color: var(–gold);
+font-size: 1.3rem;
+line-height: 1;
+}
+.ing-amount { font-weight: 600; color: var(–brown); min-width: 60px; font-size: 0.88rem; }
+
+.steps ol { list-style: none; counter-reset: steps; }
+.steps li {
+counter-increment: steps;
+padding: 0.7rem 0 0.7rem 2.8rem;
+position: relative;
+border-bottom: 1px solid rgba(0,0,0,0.05);
+font-size: 0.97rem;
+line-height: 1.55;
+}
+.steps li::before {
+content: counter(steps);
+position: absolute;
+left: 0;
+top: 0.65rem;
+width: 1.9rem; height: 1.9rem;
+background: var(–dark);
+color: var(–gold);
+border-radius: 50%;
+display: flex; align-items: center; justify-content: center;
+font-size: 0.78rem;
+font-weight: 700;
+font-family: ‘Playfair Display’, serif;
+}
+
+.tip-box {
+background: linear-gradient(135deg, #fdf6e8, #fdebc8);
+border-left: 3px solid var(–gold);
+border-radius: 0 4px 4px 0;
+padding: 0.9rem 1.1rem;
+margin-top: 1.2rem;
+font-size: 0.9rem;
+font-style: italic;
+color: var(–brown);
+}
+.tip-box strong { font-style: normal; color: var(–rust); }
+
+/* INFO SECTIONS */
+.info-section { margin-bottom: 2.5rem; }
+.info-card {
+background: white;
+border-radius: 4px;
+padding: 1.5rem 1.8rem;
+box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+margin-bottom: 1rem;
+}
+.info-card h3 { margin-bottom: 1rem; }
+.info-card p, .info-card li { font-size: 0.97rem; line-height: 1.65; margin-bottom: 0.5rem; }
+.info-card ul { list-style: none; }
+.info-card ul li { padding-left: 1.2rem; position: relative; }
+.info-card ul li::before { content: ‘›’; position: absolute; left: 0; color: var(–rust); font-weight: bold; }
+
+.info-header {
+background: var(–dark);
+color: var(–cream);
+border-radius: 4px 4px 0 0;
+padding: 1.2rem 1.8rem;
+}
+.info-header + .info-card { border-radius: 0 0 4px 4px; margin-bottom: 2.5rem; }
+.info-header h2 {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.5rem;
+font-style: italic;
+}
+.info-header h2 span { color: var(–gold); }
+
+.method-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 0.5rem; }
+.method-card {
+background: var(–cream);
+border: 1px solid var(–warm);
+border-radius: 4px;
+padding: 1rem 1.1rem;
+}
+.method-card h4 {
+font-family: ‘Playfair Display’, serif;
+font-size: 1rem;
+color: var(–rust);
+margin-bottom: 0.5rem;
+}
+.method-card p { font-size: 0.88rem; line-height: 1.5; color: var(–text); }
+.method-card .examples { font-size: 0.8rem; color: var(–muted); font-style: italic; margin-top: 0.4rem; }
+
+/* HAND TEST */
+.hand-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-top: 1rem; }
+@media(max-width:500px) { .hand-grid { grid-template-columns: 1fr; } }
+.hand-card {
+border-radius: 4px;
+padding: 1.1rem;
+text-align: center;
+}
+.hand-card.raw { background: #fff0f0; border: 2px solid #e87070; }
+.hand-card.medium { background: #fff5e8; border: 2px solid var(–gold); }
+.hand-card.welldone { background: #f0f0f0; border: 2px solid #888; }
+.hand-card .hand-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+.hand-card h4 { font-family: ‘Playfair Display’, serif; font-size: 1rem; margin-bottom: 0.4rem; }
+.hand-card.raw h4 { color: var(–red); }
+.hand-card.medium h4 { color: var(–rust); }
+.hand-card.welldone h4 { color: #555; }
+.hand-card p { font-size: 0.84rem; line-height: 1.5; }
+
+.badge-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+.badge {
+background: var(–warm);
+color: var(–brown);
+font-size: 0.78rem;
+padding: 0.25rem 0.65rem;
+border-radius: 20px;
+border: 1px solid rgba(92,61,46,0.2);
+}
+.badge.good { background: #e8f4e8; color: var(–green); border-color: var(–green); }
+.badge.bad { background: #fde8e8; color: var(–red); border-color: var(–red); }
+
+/* Page title */
+.section-title {
+font-family: ‘Playfair Display’, serif;
+font-size: clamp(1.4rem, 3vw, 1.9rem);
+font-style: italic;
+color: var(–dark);
+margin: 1.8rem 0 1.2rem;
+padding-bottom: 0.5rem;
+border-bottom: 2px solid var(–warm);
+}
+.section-title span { color: var(–rust); }
+
+footer {
+text-align: center;
+padding: 2rem;
+background: var(–dark);
+color: rgba(245,239,230,0.45);
+font-size: 0.82rem;
+letter-spacing: 0.05em;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <div class="subtitle">VHS Fleischkurs · Rezepte & Grundlagen</div>
+  <h1>Die Kunst des<br><span>Fleisch&shy;garens</span></h1>
+  <p class="lead">Vier klassische Gerichte · Einkaufswissen · Garmethoden</p>
+</header>
+
+<nav>
+  <button class="active" onclick="show('rezepte', this)">🍽 Rezepte</button>
+  <button onclick="show('einkauf', this)">🛒 Einkauf & Qualität</button>
+  <button onclick="show('methoden', this)">🔥 Garmethoden</button>
+  <button onclick="show('gargrad', this)">✋ Gargrad erkennen</button>
+</nav>
+
+<main>
+
+<!-- ===================== REZEPTE ===================== -->
+
+<section id="rezepte" class="visible">
+  <p class="section-title">Unsere <span>Kursgerichte</span></p>
+
+  <!-- 1. Szegediner -->
+
+  <div class="recipe-hero">
+    <div class="tag">Schmorgerricht · Ungarisch-Wienerisch</div>
+    <h2>Szegediner Krautfleisch<br>mit Kartoffeln</h2>
+    <div class="meta">
+      <span>⏱ ca. 90 Min.</span>
+      <span>👥 4 Personen</span>
+      <span>🌡 Schmoren, niedrige Hitze</span>
+    </div>
+  </div>
+  <div class="recipe-body">
+    <div class="recipe-cols">
+      <div class="ingredients">
+        <h3>Zutaten</h3>
+        <ul>
+          <li><span class="ing-amount">800 g</span> Schweineschulter oder Halsgrat, gewürfelt (3 cm)</li>
+          <li><span class="ing-amount">600 g</span> Sauerkraut (gut abgetropft)</li>
+          <li><span class="ing-amount">3 EL</span> Schmalz oder Butterschmalz</li>
+          <li><span class="ing-amount">2</span> Zwiebeln, fein gewürfelt</li>
+          <li><span class="ing-amount">3 Zehen</span> Knoblauch</li>
+          <li><span class="ing-amount">2 EL</span> edelsüßes Paprikapulver</li>
+          <li><span class="ing-amount">1 TL</span> scharfes Paprikapulver</li>
+          <li><span class="ing-amount">1 TL</span> Kümmel, gemahlen</li>
+          <li><span class="ing-amount">200 ml</span> Sauerrahm (+ etwas zum Anrichten)</li>
+          <li><span class="ing-amount">250 ml</span> Suppe oder Wasser</li>
+          <li><span class="ing-amount">1</span> Lorbeerblatt</li>
+          <li><span class="ing-amount">Salz, Pfeffer</span></li>
+          <li><span class="ing-amount">800 g</span> festkochende Kartoffeln</li>
+        </ul>
+      </div>
+      <div class="steps">
+        <h3>Zubereitung</h3>
+        <ol>
+          <li>Fleisch in große Würfel schneiden, trocken tupfen, mit Salz und Pfeffer würzen. In heißem Schmalz portionsweise kräftig anbraten – nicht zu viel auf einmal, sonst dampft es nur. Fleisch herausnehmen.</li>
+          <li>Zwiebeln im selben Topf glasig schwitzen, Knoblauch dazu, kurz mitrösten. Hitze reduzieren, Paprikapulver einrühren – nur kurz mitrösten (30 Sek.), sonst wird es bitter!</li>
+          <li>Fleisch zurück in den Topf, Sauerkraut dazugeben, mit Suppe aufgießen. Kümmel und Lorbeer dazu. Gut umrühren.</li>
+          <li>Deckel drauf, bei kleiner Hitze 60–75 Minuten schmoren lassen. Gelegentlich umrühren und bei Bedarf etwas Flüssigkeit nachgießen.</li>
+          <li>Kartoffeln schälen, in Salzwasser gar kochen.</li>
+          <li>Sauerrahm unter das fertige Krautfleisch rühren, kurz aufkochen lassen. Abschmecken. Mit einem Klecks Sauerrahm servieren.</li>
+        </ol>
+      </div>
+    </div>
+    <div class="tip-box"><strong>Kochschulgeheimnis:</strong> Das Paprikapulver darf nie in heißes Fett – immer kurz vom Herd nehmen oder Hitze stark reduzieren, bevor man es einrührt. Es verbrennt sofort und wird bitter.</div>
+  </div>
+
+  <!-- 2. Putenrouladen -->
+
+  <div class="recipe-hero">
+    <div class="tag">Roulade · Mediterran</div>
+    <h2>Putenrouladen gefüllt mit<br>getrockneten Tomaten & Parmaschinken</h2>
+    <div class="meta">
+      <span>⏱ ca. 60 Min.</span>
+      <span>👥 4 Personen</span>
+      <span>🌡 Kurz braten + Dünsten</span>
+    </div>
+  </div>
+  <div class="recipe-body">
+    <div class="recipe-cols">
+      <div class="ingredients">
+        <h3>Zutaten</h3>
+        <ul>
+          <li><span class="ing-amount">4 Stk.</span> Putenschnitzel, dünn geklopft (à ca. 160 g)</li>
+          <li><span class="ing-amount">8 Scheiben</span> Parmaschinken</li>
+          <li><span class="ing-amount">8–10</span> getrocknete Tomaten in Öl</li>
+          <li><span class="ing-amount">4 Blätter</span> frischer Basilikum</li>
+          <li><span class="ing-amount">2 EL</span> Olivenöl</li>
+          <li><span class="ing-amount">1</span> Zwiebel, fein gewürfelt</li>
+          <li><span class="ing-amount">2 Zehen</span> Knoblauch</li>
+          <li><span class="ing-amount">400 ml</span> Passata (passierte Tomaten)</li>
+          <li><span class="ing-amount">100 ml</span> Weißwein</li>
+          <li><span class="ing-amount">1 TL</span> Zucker</li>
+          <li><span class="ing-amount">Salz, Pfeffer</span></li>
+          <li><span class="ing-amount">300 g</span> Pasta (z.B. Tagliatelle)</li>
+          <li><span class="ing-amount">Parmesan</span> zum Bestreuen</li>
+        </ul>
+      </div>
+      <div class="steps">
+        <h3>Zubereitung</h3>
+        <ol>
+          <li>Schnitzel flach klopfen, salzen und pfeffern. Je 2 Scheiben Parmaschinken auflegen, getrocknete Tomaten und ein Basilikumblatt darauf verteilen.</li>
+          <li>Schnitzel fest aufrollen, mit Zahnstochern oder Küchengarn fixieren.</li>
+          <li>Rouladen in Olivenöl rundum kräftig anbraten (goldbraun). Herausnehmen, beiseitestellen.</li>
+          <li>Zwiebel und Knoblauch im selben Topf andünsten. Mit Weißwein ablöschen, einkochen lassen.</li>
+          <li>Passata einrühren, mit Zucker, Salz und Pfeffer abschmecken. Rouladen zurücklegen, Deckel drauf, bei mittlerer Hitze 20–25 Minuten simmern lassen.</li>
+          <li>Pasta in gut gesalzenem Wasser kochen. Rouladen aus der Soße nehmen, Zahnstocher entfernen. Soße auf Pasta geben, Rouladen daneben anrichten, Parmesan darüber.</li>
+        </ol>
+      </div>
+    </div>
+    <div class="tip-box"><strong>Tipp:</strong> Die getrockneten Tomaten vorher kurz abtupfen, damit nicht zu viel Öl in die Füllung kommt. Wer mag, kann noch etwas Mozzarella oder Provolone mit einrollen.</div>
+  </div>
+
+  <!-- 3. Zwiebelrostbraten -->
+
+  <div class="recipe-hero">
+    <div class="tag">Wiener Klassiker · Bratfleisch</div>
+    <h2>Zwiebelrostbraten (wienerisch)<br>mit klassischer Garnitur</h2>
+    <div class="meta">
+      <span>⏱ ca. 45 Min.</span>
+      <span>👥 4 Personen</span>
+      <span>🌡 Kurz braten, hohe Hitze</span>
+    </div>
+  </div>
+  <div class="recipe-body">
+    <div class="recipe-cols">
+      <div class="ingredients">
+        <h3>Zutaten</h3>
+        <ul>
+          <li><span class="ing-amount">4 Stk.</span> Rostbraten (Rindslungenbraten od. Rostbraten), je 200–220 g, 2 cm dick</li>
+          <li><span class="ing-amount">4</span> große Zwiebeln</li>
+          <li><span class="ing-amount">Mehl</span> zum Bestäuben der Ringe</li>
+          <li><span class="ing-amount">Pflanzenöl</span> zum Frittieren</li>
+          <li><span class="ing-amount">2 EL</span> Butterschmalz (fürs Fleisch)</li>
+          <li><span class="ing-amount">Salz, Pfeffer</span></li>
+          <li><span class="ing-amount">200 ml</span> Rindsuppe</li>
+          <li><span class="ing-amount">1 EL</span> Butter (für die Jus)</li>
+          <li><span class="ing-amount">Garnitur:</span> Essiggurkerl, Semmelkren, Petersilkartoffeln</li>
+        </ul>
+      </div>
+      <div class="steps">
+        <h3>Zubereitung</h3>
+        <ol>
+          <li><strong>Zwiebelringe:</strong> Zwiebeln in gleichmäßig dünne Ringe schneiden, in Mehl wenden, überschüssiges Mehl abschütteln. In Öl bei 170 °C goldbraun und knusprig frittieren. Auf Küchenpapier abtropfen, salzen. Warm halten!</li>
+          <li>Fleisch mindestens 30 Min. vor dem Braten aus dem Kühlschrank nehmen – Zimmertemperatur ist wichtig! Trocken tupfen, beidseitig salzen und pfeffern.</li>
+          <li>Pfanne (am besten Gusseisen) sehr stark erhitzen. Butterschmalz eingeben, Fleisch einlegen – nicht bewegen! 2–3 Min. braten, wenden, weitere 2 Min. (für medium). Je nach Dicke anpassen.</li>
+          <li>Fleisch auf einem Gitter ruhen lassen (5 Min.), dabei Alufolie locker darüber.</li>
+          <li><strong>Jus:</strong> Bratensatz mit Rindsuppe ablöschen, aufkochen, Butter einrühren, abschmecken.</li>
+          <li>Fleisch auf Tellern anrichten, Jus angießen, Zwiebelringe obenauf türmen. Mit Essiggurkerl, Semmelkren und Petersilkartoffeln servieren.</li>
+        </ol>
+      </div>
+    </div>
+    <div class="tip-box"><strong>Das Geheimnis:</strong> Die Zwiebelringe müssen wirklich knusprig sein – daher separat frittieren, niemals im selben Fett wie das Fleisch! Und: Fleisch <em>niemals</em> aus dem Kühlschrank direkt in die Pfanne.</div>
+  </div>
+
+  <!-- 4. Beiried -->
+
+  <div class="recipe-hero">
+    <div class="tag">Edelsteak · Napieren</div>
+    <h2>Beiried-Steak rosa gebraten<br>& mit Butter napiert</h2>
+    <div class="meta">
+      <span>⏱ ca. 25 Min.</span>
+      <span>👥  2 Personen</span>
+      <span>🌡 Scharf anbraten + Ruhen</span>
+    </div>
+  </div>
+  <div class="recipe-body">
+    <div class="recipe-cols">
+      <div class="ingredients">
+        <h3>Zutaten</h3>
+        <ul>
+          <li><span class="ing-amount">2 Stk.</span> Beiried-Steak (Striploin/Sirloin), je 250–300 g, mind. 3 cm dick</li>
+          <li><span class="ing-amount">2 EL</span> neutrales Öl (hoher Rauchpunkt)</li>
+          <li><span class="ing-amount">80 g</span> Butter, kalt, in Stücken</li>
+          <li><span class="ing-amount">3 Zweige</span> frischer Thymian</li>
+          <li><span class="ing-amount">2 Zehen</span> Knoblauch, angedrückt (ungeschält)</li>
+          <li><span class="ing-amount">Meersalz, grober Pfeffer</span></li>
+          <li><span class="ing-amount">Nach Wahl:</span> Beilagen (Bratkartoffeln, Gemüse)</li>
+        </ul>
+      </div>
+      <div class="steps">
+        <h3>Zubereitung</h3>
+        <ol>
+          <li>Steaks mindestens 1 Stunde vor dem Braten aus dem Kühlschrank nehmen. Mit Küchenpapier sehr gründlich trocken tupfen – Feuchtigkeit ist der Feind der Kruste!</li>
+          <li>Gusseisenpfanne (oder schwere Edelstahlpfanne) leer auf höchster Stufe 3–4 Minuten erhitzen – sie muss wirklich heiß sein. Öl einrühren, sofort Steaks einlegen.</li>
+          <li>Steaks <em>nicht anfassen!</em> 2,5–3 Min. braten, dann wenden. Nochmals 2,5 Min. Dann die Seiten kurz anbraten (Fettrand ca. 1 Min.).</li>
+          <li><strong>Napieren:</strong> Hitze auf mittlere Stufe reduzieren. Butter, Thymian und Knoblauch hinzugeben. Sobald die Butter schäumt, Pfanne leicht kippen und mit einem Löffel die Butter immer wieder über die Steaks schöpfen – gleichmäßig, rhythmisch, ca. 1,5–2 Minuten.</li>
+          <li>Steaks auf einem warmen Teller oder Gitter ruhen lassen – mindestens 5 Minuten (gerne 8). Die Butter aus der Pfanne dabei über die Steaks träufeln.</li>
+          <li>Erst jetzt mit grobem Meersalz und frisch gemahlenem Pfeffer würzen. In Scheiben aufschneiden und sofort servieren.</li>
+        </ol>
+      </div>
+    </div>
+    <div class="tip-box"><strong>Warum Ruhen?</strong> Beim Braten zieht sich das Fleisch zusammen und drückt den Saft zur Mitte. Beim Ruhen verteilt sich der Saft wieder gleichmäßig – das ist der Unterschied zwischen einem saftigen und einem trockenen Steak.</div>
+  </div>
+
+</section>
+
+<!-- ===================== EINKAUF ===================== -->
+
+<section id="einkauf">
+  <p class="section-title">Einkauf & <span>Qualität</span></p>
+
+  <div class="info-header">
+    <h2>Was beim <span>Fleischeinkauf</span> wichtig ist</h2>
+  </div>
+  <div class="info-card">
+    <h3>🎨 Farbe</h3>
+    <ul>
+      <li><strong>Rind:</strong> Tiefes, kräftiges Kirschrot – kein helles Rosa (zu jung oder zu frisch verpackt), kein Braungrau (zu alt, oxidiert)</li>
+      <li><strong>Kalb:</strong> Zart rosarosa bis hellrosa – je heller, desto mehr Milchfütterung</li>
+      <li><strong>Schwein:</strong> Mittleres Rosa bis hellrot, gleichmäßig – kein weißliches, wässriges Fleisch (PSE-Fleisch – Qualitätsmangel)</li>
+      <li><strong>Geflügel:</strong> Cremig bis hellgelb (keine blauen Flecken, keine graugrünlichen Stellen)</li>
+    </ul>
+  </div>
+
+  <div class="info-card">
+    <h3>🔍 Struktur & Marmorierung</h3>
+    <p>Die feine weiße Fettmaserung im Fleisch (Marmorierung) ist ein Qualitätsmerkmal – besonders bei Rind. Das Fett schmilzt beim Garen und macht das Fleisch saftig und aromatisch. Gutes Rindssteak hat sichtbare feine Fettadern im Muskel.</p>
+    <p style="margin-top:0.5rem">Das Fleisch sollte fest und prall sein – nicht wässrig oder schleimig. Ein Fingerdruck hinterlässt kurz eine Delle, die sich rasch zurückbildet.</p>
+  </div>
+
+  <div class="info-card">
+    <h3>👃 Geruch</h3>
+    <p>Frisches Fleisch riecht angenehm, leicht fleischig bis neutral. Säuerlicher Geruch kann von Vakuumverpackung stammen (verfliegt nach kurzem Lüften). Fauler, ammoniak-artiger oder süßlich-stechender Geruch: Finger weg!</p>
+  </div>
+
+  <div class="info-card">
+    <h3>📋 Herkunft & Kennzeichnung</h3>
+    <div class="badge-row">
+      <span class="badge good">AMA-Gütesiegel (AT)</span>
+      <span class="badge good">Bio-Zertifizierung</span>
+      <span class="badge good">Regionale Metzger</span>
+      <span class="badge good">Dry-Aged Auszeichnung</span>
+      <span class="badge bad">Unklare Herkunft</span>
+      <span class="badge bad">Kein MHD sichtbar</span>
+      <span class="badge bad">Viel Flüssigkeit in Verpackung</span>
+    </div>
+    <p style="margin-top:0.9rem">Beim Metzger nachfragen: Rasse, Region, Schlachtdatum und Reifung. Ein guter Fleischer beantwortet das gerne!</p>
+  </div>
+
+  <div class="info-card">
+    <h3>❄️ Lagerung zu Hause</h3>
+    <ul>
+      <li>Im kältesten Teil des Kühlschranks aufbewahren (ca. 0–2 °C)</li>
+      <li>Aus Plastikverpackung nehmen, locker in Butterpapier oder auf einem Teller (abgedeckt) lagern – Fleisch muss „atmen"</li>
+      <li>Hackfleisch: noch am selben oder nächsten Tag verarbeiten!</li>
+      <li>Steak/Braten: 2–3 Tage im Kühlschrank haltbar</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== METHODEN ===================== -->
+
+<section id="methoden">
+  <p class="section-title">Garmethoden & <span>Fleischauswahl</span></p>
+
+  <div class="info-header">
+    <h2>Welche Methode für <span>welches Fleisch?</span></h2>
+  </div>
+  <div class="info-card">
+    <div class="method-grid">
+      <div class="method-card">
+        <h4>🔥 Kurz braten / Sautieren</h4>
+        <p>Hohe Hitze, kurze Zeit. Ziel: goldbraune Kruste (Maillard-Reaktion), zartes Inneres.</p>
+        <p class="examples">Für: Steak, Schnitzel, Beiried, Rumpsteak, Filetsteak, Putenbrustscheibe, Kalbskarree, Lammkoteletts</p>
+        <p style="margin-top:0.5rem; font-size:0.85rem"><strong>Wichtig:</strong> Fleisch trocken tupfen, Pfanne heiß vorheizen, nicht zu viel auf einmal!</p>
+      </div>
+      <div class="method-card">
+        <h4>🫧 Dünsten / Pochieren</h4>
+        <p>Geringe Hitze, Flüssigkeit, geschlossener Topf. Schonend, saftig – kein Braunbraten.</p>
+        <p class="examples">Für: Geflügelbrust, Kalb (Frikassee), Zunge, Tafelspitz (pochiert), zartes Gemüsefleisch</p>
+        <p style="margin-top:0.5rem; font-size:0.85rem"><strong>Wichtig:</strong> Temperatur unter 90 °C halten – nie stark sprudelnd kochen!</p>
+      </div>
+      <div class="method-card">
+        <h4>🍲 Schmoren / Braisieren</h4>
+        <p>Erst scharf anbraten (Röstaromen!), dann mit Flüssigkeit bei niedriger Hitze lange garen. Bindegewebe löst sich auf → saftig, zart.</p>
+        <p class="examples">Für: Schulter, Wade (Ossobuco), Rinderbäckchen, Gulasch, Krautfleisch, Zwiebelbraten, Lammkeule</p>
+        <p style="margin-top:0.5rem; font-size:0.85rem"><strong>Wichtig:</strong> Günstigere, durchwachsene Stücke – die werden durch langes Schmoren erst wirklich gut!</p>
+      </div>
+      <div class="method-card">
+        <h4>🌡 Niedrigtemperatur</h4>
+        <p>50–80 °C im Ofen, sehr lange Garzeit. Gleichmäßig rosa, minimaler Saftverlust. Oft mit kurzem Anbraten kombiniert.</p>
+        <p class="examples">Für: Rindsfilet, Beiried (Sous-vide-ähnlich), Lammrücken, Kalbskarree – alle Edelteile</p>
+        <p style="margin-top:0.5rem; font-size:0.85rem"><strong>Wichtig:</strong> Bratenthermometer verwenden! Danach kurz scharf anbraten für Kruste.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-card" style="margin-top:1.5rem">
+    <h3>🐄 Welches Stück für welchen Zweck?</h3>
+    <ul>
+      <li><strong>Filet / Lungenbraten:</strong> Edelster Teil, wenig Fett, zart – kurz braten oder Niedrigtemperatur</li>
+      <li><strong>Beiried / Rostbraten / Sirloin:</strong> Feines Fett, kräftiges Aroma – kurz braten, napieren</li>
+      <li><strong>Schulter / Halsgrat (Schwein):</strong> Durchwachsen, bindegewebsreich – ideal zum Schmoren</li>
+      <li><strong>Wade / Haxe:</strong> Viel Kollagen → beim Schmoren wird's samtig und gelatinös</li>
+      <li><strong>Tafelspitz:</strong> Mager, muss vorsichtig pochiert/gekocht werden – nie sprudelnd kochen!</li>
+      <li><strong>Geflügelbrust:</strong> Schnell trocken – kurz braten, Niedrigtemperatur oder feucht dünsten</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== GARGRAD ===================== -->
+
+<section id="gargrad">
+  <p class="section-title">Gargrad erkennen – <span>die Handprobe</span></p>
+
+  <div class="info-header">
+    <h2>Die <span>Druckprobe</span> mit der Hand</h2>
+  </div>
+  <div class="info-card">
+    <p style="margin-bottom:1rem">Drücke mit dem Zeigefinger auf das Fleisch und vergleiche den Widerstand mit dem Fleischballen deiner eigenen Hand – das Muskelpolster unterhalb des Daumens.</p>
+
+```
+<div class="hand-grid">
+  <div class="hand-card raw">
+    <div class="hand-icon">🤚</div>
+    <h4>Raw / Bleu</h4>
+    <p>Hand entspannt, Finger locker nach unten hängen lassen.<br><br>Fleisch: sehr weich, fast kein Widerstand, gibt stark nach.<br><br>Kerntemperatur: unter 45 °C</p>
+  </div>
+  <div class="hand-card medium">
+    <div class="hand-icon">👌</div>
+    <h4>Medium / Rosa</h4>
+    <p>Daumen und Mittelfinger leicht zusammenführen.<br><br>Fleisch: federt zurück, hat Widerstand, aber gibt etwas nach.<br><br>Kerntemperatur: 55–60 °C</p>
+  </div>
+  <div class="hand-card welldone">
+    <div class="hand-icon">✊</div>
+    <h4>Well Done / Durch</h4>
+    <p>Faust fest geschlossen.<br><br>Fleisch: hart, fest, kein Nachgeben, kaum Elastizität.<br><br>Kerntemperatur: über 70 °C</p>
+  </div>
+</div>
+
+<div style="margin-top:1.5rem">
+  <h3>Alle Stufen im Überblick</h3>
+  <table style="width:100%; border-collapse:collapse; font-size:0.92rem; margin-top:0.5rem">
+    <thead>
+      <tr style="background:var(--dark); color:var(--cream)">
+        <th style="padding:0.6rem 0.8rem; text-align:left">Gargrad</th>
+        <th style="padding:0.6rem 0.8rem; text-align:left">Deutsch</th>
+        <th style="padding:0.6rem 0.8rem; text-align:left">Kerntemp.</th>
+        <th style="padding:0.6rem 0.8rem; text-align:left">Daumen + Finger</th>
+        <th style="padding:0.6rem 0.8rem; text-align:left">Farbe innen</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid var(--warm)">
+        <td style="padding:0.55rem 0.8rem"><strong>Blue / Bleu</strong></td>
+        <td style="padding:0.55rem 0.8rem">Roh</td>
+        <td style="padding:0.55rem 0.8rem">38–42 °C</td>
+        <td style="padding:0.55rem 0.8rem">Offen / entspannt</td>
+        <td style="padding:0.55rem 0.8rem">Durchgehend rot</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--warm); background:#fafafa">
+        <td style="padding:0.55rem 0.8rem"><strong>Rare / Saignant</strong></td>
+        <td style="padding:0.55rem 0.8rem">Blutig</td>
+        <td style="padding:0.55rem 0.8rem">45–50 °C</td>
+        <td style="padding:0.55rem 0.8rem">Daumen + Zeigefinger</td>
+        <td style="padding:0.55rem 0.8rem">Stark rot, weich</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--warm)">
+        <td style="padding:0.55rem 0.8rem"><strong>Medium Rare</strong></td>
+        <td style="padding:0.55rem 0.8rem">Fast rosa</td>
+        <td style="padding:0.55rem 0.8rem">52–57 °C</td>
+        <td style="padding:0.55rem 0.8rem">Daumen + Mittelfinger</td>
+        <td style="padding:0.55rem 0.8rem">Rosa, etwas Rot</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--warm); background:#fafafa">
+        <td style="padding:0.55rem 0.8rem"><strong>Medium</strong></td>
+        <td style="padding:0.55rem 0.8rem">Rosa</td>
+        <td style="padding:0.55rem 0.8rem">58–63 °C</td>
+        <td style="padding:0.55rem 0.8rem">Daumen + Ringfinger</td>
+        <td style="padding:0.55rem 0.8rem">Gleichmäßig rosa</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--warm)">
+        <td style="padding:0.55rem 0.8rem"><strong>Medium Well</strong></td>
+        <td style="padding:0.55rem 0.8rem">Halb durch</td>
+        <td style="padding:0.55rem 0.8rem">65–68 °C</td>
+        <td style="padding:0.55rem 0.8rem">Daumen + kleiner Finger</td>
+        <td style="padding:0.55rem 0.8rem">Leicht rosa, grau</td>
+      </tr>
+      <tr style="background:#fafafa">
+        <td style="padding:0.55rem 0.8rem"><strong>Well Done</strong></td>
+        <td style="padding:0.55rem 0.8rem">Durchgebraten</td>
+        <td style="padding:0.55rem 0.8rem">über 70 °C</td>
+        <td style="padding:0.55rem 0.8rem">Faust geschlossen</td>
+        <td style="padding:0.55rem 0.8rem">Graubraun, trocken</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="tip-box" style="margin-top:1.2rem"><strong>Profi-Tipp:</strong> Die Handprobe ist eine Schätzmethode und braucht Übung. Für Anfänger und teures Fleisch unbedingt ein Bratenthermometer verwenden – es ist das sicherste Werkzeug! Das Ruhen nicht vergessen: Die Kerntemperatur steigt nach dem Braten noch 2–4 °C weiter an.</div>
+```
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  VHS Fleischkurs · Rezepte & Grundlagen · Guten Hunger! 🍖
+</footer>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('section').forEach(s => s.classList.remove('visible'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('visible');
+  btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>
